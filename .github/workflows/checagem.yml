@@ -1,0 +1,40 @@
+name: checagem
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Nada pessoal, nenhuma midia e nenhum segredo
+        run: python3 scripts/checar_publico.py
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements*.txt
+
+      - name: Testes (Python)
+        run: |
+          python -m pip install -r requirements-dev.txt
+          python -m pytest -q
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Typecheck (Remotion)
+        run: |
+          npm ci
+          npm run typecheck
