@@ -1,0 +1,10 @@
+{
+  "perfil_padrao": "principal",
+  "perfis": {
+    "principal": {
+      "nome": "Seu Canal",
+      "avatar": "avatar.jpg",
+      "twitch": ""
+    }
+  }
+}

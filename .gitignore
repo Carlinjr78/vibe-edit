@@ -1,0 +1,36 @@
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# chaves e segredos: nunca no git
+.env
+.env.*
+
+# midia fica fora do repositorio (veja VIDEO_MIDIA no README)
+*.mp4
+*.mov
+*.mkv
+*.m4a
+*.mp3
+*.wav
+!assets/livre/sfx/*.wav
+
+assets/livre/musicas/*
+!assets/livre/musicas/README.md
+
+assets/livre/packs/*
+!assets/livre/packs/README.md
+
+assets/com-direitos/*
+!assets/com-direitos/README.md
+
+# avatar e imagens do seu canal: ficam so no seu PC
+assets/canal/*
+!assets/canal/README.md
+
+# seus videos: o repositorio publico so leva o modelo e o exemplo
+videos/*
+!videos/_modelo/
+!videos/_exemplo/

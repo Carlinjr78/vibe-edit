@@ -1,0 +1,10 @@
+{
+  "estilo": "video-curto",
+  "formato": "reels-vertical",
+  "nomes_para_o_whisper": "VS Code, Ctrl P, Alt, F2.",
+  "brutos": {
+    "cam1": { "tipo": "cam", "arquivo": "01-gancho-cam.mov" },
+    "tela": { "tipo": "tela", "arquivo": "02-tela.mp4" },
+    "voz1": { "tipo": "voz", "arquivo": "03-narracao.m4a" }
+  }
+}

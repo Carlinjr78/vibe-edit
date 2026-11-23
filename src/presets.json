@@ -1,0 +1,20 @@
+{
+  "reels-vertical": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "caption": { "y": 1340, "size": 92, "maxChars": 17 }
+  },
+  "reels-vertical-60": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 60,
+    "caption": { "y": 1340, "size": 92, "maxChars": 17 }
+  },
+  "youtube-horizontal": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "caption": { "y": 860, "size": 66, "maxChars": 30 }
+  }
+}
