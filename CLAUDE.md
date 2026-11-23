@@ -21,7 +21,11 @@ Kit para editar vídeos sempre no mesmo padrão com Claude Code e Remotion. O us
 
 ## Primeiro uso
 
-Se `src/canal.json` ainda tiver `"Seu Canal"`, pergunte ao usuário o nome do canal, o usuário da Twitch (se tiver) e peça o avatar para `assets/canal/`. Sem isso os modais saem genéricos.
+Se `src/canal.json` ainda tiver `"Seu Canal"`, ou faltar `.venv` ou `node_modules`, ofereça a configuração inicial: a skill `configurar` (`.agents/skills/configurar/SKILL.md`). Sem o canal configurado, os modais saem genéricos.
+
+## Repositório público
+
+Este repositório é público. Nunca faça commit de mídia, `.env`, chaves, dos projetos do usuário em `videos/` (só `_modelo/` e `_exemplo/` são do repositório) nem do `src/canal.json` preenchido. `scripts/checar_publico.py` confere isso; as regras de contribuição estão no `CONTRIBUTING.md`.
 
 ## Como decidir
 

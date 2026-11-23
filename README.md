@@ -49,7 +49,7 @@ A ideia central: **o seu estilo é texto**. As regras de cada tipo de vídeo fic
 
 | | |
 |---|---|
-| **Claude Code** | Com uma conta que dê acesso a ele (plano pago da Anthropic ou chave de API) |
+| **Um agente de código** | [Claude Code](https://claude.com/claude-code) (plano pago da Anthropic ou chave de API) ou [Codex](https://developers.openai.com/codex). O kit foi feito e testado com o Claude Code; o Codex lê as mesmas instruções pelo `AGENTS.md` |
 | **Node.js** | 18 ou mais novo |
 | **Python** | 3.12 |
 | **ffmpeg** | No PATH |
@@ -60,8 +60,32 @@ Feito e usado no **Windows**. Deve funcionar no macOS e no Linux, mas ainda não
 ## Instalação
 
 ```bash
-git clone https://github.com/<seu-usuario>/vibe-edit.git
+git clone https://github.com/Carlinjr78/vibe-edit.git
 cd vibe-edit
+```
+
+### Jeito fácil: a skill `configurar`
+
+Abra o agente na pasta e peça a configuração:
+
+| Agente | O que digitar |
+|---|---|
+| Claude Code | `/configurar` |
+| Codex | `$configurar` (ou "configura o vibe-edit pra mim") |
+
+A skill confere o que já está instalado, instala as dependências do projeto, pergunta o nome do seu canal, a Twitch e o avatar, escolhe a pasta de mídia e roda os testes no final. Ela **pergunta antes** de instalar qualquer programa no sistema (Node, Python, ffmpeg) e antes de mudar variável de ambiente.
+
+As instruções ficam em [`.agents/skills/configurar/SKILL.md`](.agents/skills/configurar/SKILL.md) (Codex). O Claude Code lê o mesmo arquivo por [`.claude/skills/configurar/`](.claude/skills/configurar/SKILL.md).
+
+Para ver o que já está pronto, a qualquer momento:
+
+```bash
+python scripts/configurar.py checar
+```
+
+### Jeito manual
+
+```bash
 npm install
 python -m venv .venv
 ```
@@ -83,6 +107,16 @@ sudo apt install ffmpeg    # Ubuntu/Debian
 
 Na primeira transcrição, o Whisper baixa o modelo (`large-v3-turbo`, cerca de 1,6 GB).
 
+**Seu canal:** edite `src/canal.json` com o nome do canal e, se tiver, o usuário da Twitch. Coloque o avatar (quadrado, 400×400) em `assets/canal/avatar.jpg`. Ou deixe o script fazer, inclusive o recorte do avatar:
+
+```bash
+.venv/Scripts/python.exe scripts/configurar.py canal --nome "Meu Canal" --twitch meucanal --avatar foto.jpg
+```
+
+Tem mais de um canal? Crie outro perfil em `src/canal.json` e escolha em cada vídeo com `"perfil"` no `projeto.json`. Se você esquecer de configurar, o agente pergunta no primeiro vídeo.
+
+> Se você contribuir com o projeto, não mande o seu `src/canal.json` no PR: no repositório ele fica com o modelo "Seu Canal". A checagem automática avisa.
+
 ### Onde ficam os vídeos
 
 O repositório guarda **só texto** (roteiros, cortes, edições). Brutos e renders ficam numa pasta de mídia fora dele:
@@ -92,26 +126,11 @@ O repositório guarda **só texto** (roteiros, cortes, edições). Brutos e rend
 
 Para usar outra pasta, defina a variável de ambiente `VIDEO_MIDIA`. Evite pastas sincronizadas (OneDrive, Dropbox, Google Drive): os arquivos de trabalho são grandes e mudam o tempo todo.
 
-### Seu canal
-
-Edite `src/canal.json` com o nome do canal e, se tiver, o usuário da Twitch. Coloque o avatar (quadrado, 400×400) em `assets/canal/avatar.jpg`. Tem mais de um canal? Crie outro perfil no mesmo arquivo e escolha em cada vídeo.
-
-```json
-{
-  "perfil_padrao": "principal",
-  "perfis": {
-    "principal": { "nome": "Meu Canal", "avatar": "avatar.jpg", "twitch": "meucanal" }
-  }
-}
-```
-
-Se você esquecer, o agente pergunta no primeiro vídeo.
-
 ---
 
 ## Seu primeiro vídeo
 
-1. **Abra o Claude Code na pasta** e peça: *"cria um vídeo novo chamado 2026-12-meu-video, estilo video-curto"*.
+1. **Abra o agente na pasta** e peça: *"cria um vídeo novo chamado 2026-12-meu-video, estilo video-curto"*.
 2. **Grave e coloque os brutos** na pasta que ele indicar (`<pasta de mídia>/2026-12-meu-video/brutos/`). Nomes como `01-gancho-cam.mov`, `02-tela.mp4`, `03-narracao.m4a` ajudam.
 3. **Mande o roteiro.** Pode colar no chat. O modelo está em [`videos/_modelo/roteiro.md`](videos/_modelo/roteiro.md):
 
@@ -200,13 +219,18 @@ Quer outro? Peça ao agente. Antes de escrever um efeito novo, ele tenta resolve
 - **Português por padrão.** A transcrição usa `pt`. Para outra língua, defina `WHISPER_LANGUAGE` (ex.: `en`). As regras e o `CLAUDE.md` estão em português.
 - **Windows:** o Remotion falha em caminhos muito longos. Use uma pasta curta para o repositório ou ative os caminhos longos do Windows.
 
-## Testes
+## Contribuindo
+
+Correções, efeitos novos e testes no macOS e no Linux são bem-vindos. Antes, leia o [CONTRIBUTING.md](CONTRIBUTING.md): a regra principal é **nada pessoal e nada de mídia no Git**. Todo PR passa por uma checagem automática que roda os testes, o typecheck e barra vídeo, áudio, imagem, `.env`, chaves e caminhos do seu computador.
 
 ```bash
 .venv/Scripts/python.exe -m pip install -r requirements-dev.txt
 .venv/Scripts/python.exe -m pytest
 npm run typecheck
+python scripts/checar_publico.py
 ```
+
+Falha de segurança: veja o [SECURITY.md](SECURITY.md) e reporte em privado. Ao participar, você concorda com o [código de conduta](CODE_OF_CONDUCT.md).
 
 ## Licença
 

@@ -34,3 +34,6 @@ assets/canal/*
 videos/*
 !videos/_modelo/
 !videos/_exemplo/
+
+# configuracao local dos agentes
+.claude/settings.local.json
